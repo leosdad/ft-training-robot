@@ -8,6 +8,6 @@
 
 ## Remote server data
 
-ftp://192.168.15.30/ `(Use your controller IP here)`
-User: ft
-Password: fischertechnik
+- ftp://192.168.15.30/ `(Use your controller IP here)`
+- User: ft
+- Password: fischertechnik
