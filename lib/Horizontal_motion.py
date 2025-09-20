@@ -13,7 +13,7 @@ h_max_speed = 512
 h_max_range = 330
 
 h_commands = None
-h_counter = None
+h_cmd_counter = None
 h_current_time = None
 h_offset = None
 h_state = None
@@ -25,9 +25,9 @@ h_state = None
 # Initialize variables
 
 def Init_horizontal():
-    global h_commands, h_counter, h_current_time, h_offset, h_state
+    global h_commands, h_cmd_counter, h_current_time, h_offset, h_state
     h_commands = []
-    h_counter = 1
+    h_cmd_counter = 1
     h_current_time = -1
     h_offset = 0
     h_state = 'stopped'
@@ -41,7 +41,7 @@ def Store_horizontal_commands(_values):
         h_commands.append(_item)
 
 
-# Start returning to home position
+# Start returning arm to home position
 
 def Reset_horizontal_start():
     global h_state
@@ -51,7 +51,7 @@ def Reset_horizontal_start():
         h_state = 'going backward'
 
 
-# Loop to return to home position
+# Loop to return arm to home position
 
 def Reset_horizontal_loop():
     global h_state, h_offset
@@ -61,7 +61,7 @@ def Reset_horizontal_loop():
         h_offset = 0
 
 
-# Return True if motor is at home position
+# Return True if arm is at home position
 
 def Is_horizontal_reset():
     return Horizontal_home_switch.is_closed() and h_state == 'stopped' and h_offset == 0
@@ -76,21 +76,21 @@ def Horizontal_timeout(_millis):
 # Command processor
 
 def Horizontal_command_loop():
-    global h_counter, h_current_time
-    if h_counter <= len(h_commands):
-        cmd, val = h_commands[h_counter - 1]
+    global h_cmd_counter, h_current_time
+    if h_cmd_counter <= len(h_commands):
+        cmd, val = h_commands[h_cmd_counter - 1]
         if cmd == 'move':
             if Move_horizontally(val):
-                h_counter += 1
+                h_cmd_counter += 1
         elif cmd == 'wait':
             if h_current_time < 0:
                 h_current_time = time.time() * 1000
             if Horizontal_timeout(val):
-                h_counter += 1
+                h_cmd_counter += 1
                 h_current_time = -1
 
 
-# Move to target position
+# Move arm to target position. Returns True when target is reached
 
 def Move_horizontally(_target):
     global h_offset, h_state
@@ -108,7 +108,7 @@ def Move_horizontally(_target):
             Horizontal_encodermotor.stop()
             h_state = 'stopped'
             h_offset = _target
-            return True
+            return True # target reached
     return False
 
 #endregion

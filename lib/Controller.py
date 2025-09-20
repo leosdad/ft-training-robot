@@ -32,7 +32,7 @@ Horizontal_home_switch = txt_factory.input_factory.create_mini_switch(TXT_M, 3)
 
 # Gripper
 Gripper_motor = txt_factory.motor_factory.create_motor(TXT_M, 4)
-Gripper_mini_switch = txt_factory.input_factory.create_mini_switch(TXT_M, 4)
+Gripper_home_switch = txt_factory.input_factory.create_mini_switch(TXT_M, 4)
 
 #endregion
 

@@ -14,7 +14,7 @@ t_min_range = -200
 t_max_range = 800
 
 t_commands = None
-t_counter = None
+t_cmd_counter = None
 t_current_time = None
 t_offset = None
 t_state = None
@@ -26,9 +26,9 @@ t_state = None
 # Initialize variables
 
 def Init_turntable():
-    global t_commands, t_counter, t_current_time, t_offset, t_state
+    global t_commands, t_cmd_counter, t_current_time, t_offset, t_state
     t_commands = []
-    t_counter = 1
+    t_cmd_counter = 1
     t_current_time = -1
     t_offset = 0
     t_state = 'stopped'
@@ -42,7 +42,7 @@ def Store_turntable_commands(_values):
         t_commands.append(_item)
 
 
-# Start returning to home position
+# Start returning turntable to home position
 
 def Reset_turntable_start():
     global t_state
@@ -52,7 +52,7 @@ def Reset_turntable_start():
         t_state = 'going down'
 
 
-# Loop to return to home position
+# Loop to return turntable to home position
 
 def Reset_turntable_loop():
     global t_state, t_offset
@@ -62,7 +62,7 @@ def Reset_turntable_loop():
         t_offset = 0
 
 
-# Return True if motor is at home position
+# Return True if turntable is at home position
 
 def Is_turntable_reset():
     return Turntable_home_switch.is_closed() and t_state == 'stopped' and t_offset == 0
@@ -77,21 +77,21 @@ def Turntable_timeout(_millis):
 # Command processor
 
 def Turntable_command_loop():
-    global t_counter, t_current_time
-    if t_counter <= len(t_commands):
-        cmd, val = t_commands[t_counter - 1]
+    global t_cmd_counter, t_current_time
+    if t_cmd_counter <= len(t_commands):
+        cmd, val = t_commands[t_cmd_counter - 1]
         if cmd == 'move':
             if Move_turntablely(val):
-                t_counter += 1
+                t_cmd_counter += 1
         elif cmd == 'wait':
             if t_current_time < 0:
                 t_current_time = time.time() * 1000
             if Turntable_timeout(val):
-                t_counter += 1
+                t_cmd_counter += 1
                 t_current_time = -1
 
 
-# Move to target position
+# Move turntable to target position. Returns True when target is reached
 
 def Move_turntablely(_target):
     global t_offset, t_state
@@ -109,7 +109,7 @@ def Move_turntablely(_target):
             Turntable_encodermotor.stop()
             t_state = 'stopped'
             t_offset = _target
-            return True
+            return True # target reached
     return False
 
 #endregion

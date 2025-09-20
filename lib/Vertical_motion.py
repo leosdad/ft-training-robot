@@ -13,7 +13,7 @@ v_max_speed = 512
 v_max_range = 480
 
 v_commands = None
-v_counter = None
+v_cmd_counter = None
 v_current_time = None
 v_offset = None
 v_state = None
@@ -25,9 +25,9 @@ v_state = None
 # Initialize variables
 
 def Init_vertical():
-    global v_commands, v_counter, v_current_time, v_offset, v_state
+    global v_commands, v_cmd_counter, v_current_time, v_offset, v_state
     v_commands = []
-    v_counter = 1
+    v_cmd_counter = 1
     v_current_time = -1
     v_offset = 0
     v_state = 'stopped'
@@ -41,7 +41,7 @@ def Store_vertical_commands(_values):
         v_commands.append(_item)
 
 
-# Start returning to home position
+# Start returning arm to home position
 
 def Reset_vertical_start():
     global v_state
@@ -50,7 +50,7 @@ def Reset_vertical_start():
         Vertical_encodermotor.start()
         v_state = 'going down'
 
-# Loop to return to home position
+# Loop to return arm to home position
 
 def Reset_vertical_loop():
     global v_state, v_offset
@@ -60,7 +60,7 @@ def Reset_vertical_loop():
         v_offset = 0
 
 
-# Return True if motor is at home position
+# Return True if arm is at home position
 
 def Is_vertical_reset():
     return Vertical_home_switch.is_closed() and v_state == 'stopped' and v_offset == 0
@@ -75,21 +75,21 @@ def Vertical_timeout(_millis):
 # Command processor
 
 def Vertical_command_loop():
-    global v_counter, v_current_time
-    if v_counter <= len(v_commands):
-        cmd, val = v_commands[v_counter - 1]
+    global v_cmd_counter, v_current_time
+    if v_cmd_counter <= len(v_commands):
+        cmd, val = v_commands[v_cmd_counter - 1]
         if cmd == 'move':
             if Move_vertically(val):
-                v_counter += 1
+                v_cmd_counter += 1
         elif cmd == 'wait':
             if v_current_time < 0:
                 v_current_time = time.time() * 1000
             if Vertical_timeout(val):
-                v_counter += 1
+                v_cmd_counter += 1
                 v_current_time = -1
 
 
-# Move to target position
+# Move arm to target position. Returns True when target is reached
 
 def Move_vertically(_target):
     global v_offset, v_state
@@ -107,7 +107,7 @@ def Move_vertically(_target):
             Vertical_encodermotor.stop()
             v_state = 'stopped'
             v_offset = _target
-            return True
+            return True # target reached
     return False
 
 #endregion
