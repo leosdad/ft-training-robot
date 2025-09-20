@@ -1,7 +1,7 @@
 
 # region ----------------------------------------------------------------------------------- Imports
 
-from lib.Controller import *
+from lib.controller import *
 from lib.Turntable import *
 from lib.Vertical_motion import *
 from lib.Horizontal_motion import *
