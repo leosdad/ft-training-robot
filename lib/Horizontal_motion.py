@@ -1,13 +1,13 @@
 
-# region ----------------------------------------------------------------------------------- Imports
+#region ------------------------------------------------------------------------------------ Imports
 
 import time
 from fischertechnik.controller.Motor import Motor  # pyright: ignore
 from lib.controller import Horizontal_home_switch, Horizontal_encodermotor  # pyright: ignore
 
-# endregion
+#endregion
 
-# region --------------------------------------------------------------------------------- Variables
+#region ---------------------------------------------------------------------------------- Variables
 
 h_max_speed = 512
 h_max_range = 330
@@ -18,9 +18,9 @@ h_current_time = None
 h_offset = None
 h_state = None
 
-# endregion
+#endregion
 
-# region --------------------------------------------------------------------------------- Functions
+#region ---------------------------------------------------------------------------------- Functions
 
 # Initialize variables
 
@@ -111,4 +111,4 @@ def Move_horizontally(_target):
             return True
     return False
 
-# endregion
+#endregion

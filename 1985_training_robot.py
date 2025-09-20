@@ -1,5 +1,5 @@
 
-# region ----------------------------------------------------------------------------------- Imports
+#region ------------------------------------------------------------------------------------ Imports
 
 from lib.controller import *
 from lib.Turntable import *
@@ -7,9 +7,9 @@ from lib.Vertical_motion import *
 from lib.Horizontal_motion import *
 # from lib.Gripper import *
 
-# endregion
+#endregion
 
-# region --------------------------------------------------------------------------------- Functions
+#region ---------------------------------------------------------------------------------- Functions
 
 def Turntable_commands():
     return [
@@ -23,7 +23,7 @@ def Turntable_commands():
 
 def Vertical_commands():
     return [
-        ['wait', 1000],
+        # ['wait', 1000],
         ['move', 100],
         # ['wait', 400],
         # ['move', 350],
@@ -37,15 +37,15 @@ def Horizontal_commands():
         ['move', 200],
         # ['wait', 100],
         # ['move', 280],
-        ['wait', 1000],
+        ['wait', 300],
         # ['move', 110],
         # ['wait', 100],
         ['move', 0],
     ]
 
-# endregion
+#endregion
 
-# region ------------------------------------------------------------------------------ Main program
+#region ------------------------------------------------------------------------------- Main program
 
 # Initialize all
 
@@ -79,4 +79,4 @@ while True:
     Vertical_command_loop()
     Horizontal_command_loop()
 
-# endregion -----------------------------------------------------------------------------------------
+#endregion -----------------------------------------------------------------------------------------

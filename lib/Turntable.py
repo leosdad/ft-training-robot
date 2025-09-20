@@ -1,13 +1,13 @@
 
-# region ----------------------------------------------------------------------------------- Imports
+#region ------------------------------------------------------------------------------------ Imports
 
 import time
 from fischertechnik.controller.Motor import Motor  # pyright: ignore
 from lib.controller import Turntable_home_switch, Turntable_encodermotor  # pyright: ignore
 
-# endregion
+#endregion
 
-# region --------------------------------------------------------------------------------- Variables
+#region ---------------------------------------------------------------------------------- Variables
 
 t_max_speed = 512
 t_min_range = -200
@@ -19,9 +19,9 @@ t_current_time = None
 t_offset = None
 t_state = None
 
-# endregion
+#endregion
 
-# region --------------------------------------------------------------------------------- Functions
+#region ---------------------------------------------------------------------------------- Functions
 
 # Initialize variables
 
@@ -112,4 +112,4 @@ def Move_turntablely(_target):
             return True
     return False
 
-# endregion
+#endregion

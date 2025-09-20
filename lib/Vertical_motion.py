@@ -1,13 +1,13 @@
 
-# region ----------------------------------------------------------------------------------- Imports
+#region ------------------------------------------------------------------------------------ Imports
 
 import time
 from fischertechnik.controller.Motor import Motor  # pyright: ignore
 from lib.controller import Vertical_home_switch, Vertical_encodermotor  # pyright: ignore
 
-# endregion
+#endregion
 
-# region --------------------------------------------------------------------------------- Variables
+#region ---------------------------------------------------------------------------------- Variables
 
 v_max_speed = 512
 v_max_range = 480
@@ -18,9 +18,9 @@ v_current_time = None
 v_offset = None
 v_state = None
 
-# endregion
+#endregion
 
-# region --------------------------------------------------------------------------------- Functions
+#region ---------------------------------------------------------------------------------- Functions
 
 # Initialize variables
 
@@ -110,4 +110,4 @@ def Move_vertically(_target):
             return True
     return False
 
-# endregion
+#endregion
